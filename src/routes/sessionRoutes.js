@@ -8,7 +8,7 @@ const router = Router();
 // Notas: también debo definir las rutas en app.js (generico) y en viewsRouter.js (vistas)
 // -----------------------------------------------------------
 // rutas post  -  register
-// -----------------------------------------------------------
+// ----------------------------------------------------------- 
 router.post("/register", async (req, res) => {
   const { first_name, last_name, email, age, password, role } = req.body;
   const password_hash = createHash(password);
@@ -120,13 +120,18 @@ router.post("/login", async (req, res) => {
 });
 
 // -----------------------------------------------------------
-// recupero de pass
+// recupero de pass  (update de la password)
 // -----------------------------------------------------------
 router.post("/recupero", async (req, res) => {
   const { email, password } = req.body;
   try {
     // validamos si recibimos todos los campos
     const userFound = await userModel.findOne({ email });
+
+    if (!userFound) {
+      return res.status(401).json({ message: "El usuario NO existe."});
+    }
+
     const password_hash = createHash(password);
     userFound.password = password_hash;
     await userFound.save();
