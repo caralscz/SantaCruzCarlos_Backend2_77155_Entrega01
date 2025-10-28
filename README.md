@@ -1,10 +1,11 @@
 
-# Sobre la existente API de E-commerce del curso anterior, se debe implementar un CRUD de usuarios, junto con un sistema de Autenticación y Autorización.
+# E-commerce con Autenticación y Autorización. Contiene un CRUD de usuarios
 
 ## Objetivo
 
-   Para el e-commerce existente, se desarrolló una API RESTful con Node.js, Express, Handlebars y Socket.io para la gestión de productos y carritos de compra en tiempo real, con persistencia en sistema de archivos mongoDB.
-   Sobre esa base, implementar un sistema de "login" de usuario con encriptación de contraseñas y que debe trabajar con JWT (JSON Web Tokens)
+  El e-commerce existente del curso anterior, fué desarrollado como una API RESTful con Node.js, Express, Handlebars y Socket.io para la gestión de productos y carritos de compra en tiempo real, con persistencia en sistema de archivos mongoDB.
+  Sobre esa base, se debe implementar un sistema de "login" de usuario con encriptación de contraseñas y que trabaje con JWT (JSON Web Tokens)
+  Se debe hacer un CRUD de usuarios
 
 ## Pre-Entrega 01
 - Curso: Backend II: DISEÑO Y ARQUITECTURA BACKEND 
@@ -43,6 +44,9 @@
   Todos los usuarios que no sean admin deberán contar con un rol “usuario”.
   Implementar botón de “logout” para destruir la sesión
 
+- El index de la aplicacion es "src/app.js"
+  El CRUD  de usuarios (/crud/users) se define en "src/routes/crudUsersRouter.js"
+  Ubicación del archivo "src/dao/models/userModel.js"
 
 ---
 ## Instalación  ⚙️
@@ -60,7 +64,6 @@ npm install
 ```
 
 5. Luego podrá acceder a la aplicación desde cualquier navegador en **localhost** desde
-
 
 - 🚀 Home [http://localhost:8080](http://localhost:8080)
 - 🧑🏽‍🦰 CRUD Users:   [http://localhost:8080/crud/Users](http://localhost:8080/crud/Users)
