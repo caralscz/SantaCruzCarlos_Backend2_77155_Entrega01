@@ -1,0 +1,81 @@
+<!--
+// -----------------------------------------------------------
+// src/views/altaProdCart.handlebars
+// Vista en detalle de un carrito al que se dio de alta un producto. 
+// -----------------------------------------------------------
+-->
+<!-- Linea del título -->
+<div class="tit-simple">
+    <h1>Coder Shop - Carrito actualizado</h1>
+</div>
+<hr  class="lineaSupTit" >
+
+<p>Carrito ID: {{cart._id}}</p>
+
+<table border="1" cellpadding="6">
+  <thead>
+    <tr>
+      <th>product Id</th>
+      <th>Producto</th>
+      <th>Código</th>
+      <th>Cantidad</th>
+      <th>Precio</th>
+      <th>Stock</th>
+      <th>img</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    {{#each cart.products}}
+      <tr>
+        <td>{{this.product._id}}</td>
+        <td>{{this.product.title}}</td>
+        <td>{{this.product.code}}</td>
+        <td>{{this.quantity}}</td>
+        <td>${{this.product.price}}</td>
+        <td>{{this.product.stock}}</td>
+        <td> {{#if this.product.thumbnails}}
+                <img src="{{this.product.thumbnails}}" alt="{{this.product.title}}"  title="{{this.product.title}}" class="imgChica">
+            {{else}}
+                <img src="../img/ImagenDefault.png" 
+                    title="Proximamente se cargará una imagen del producto" 
+                    alt="Proximamente se cargará una imagen del producto" 
+                     class="imgChica">
+                
+            {{/if}}
+        </td>
+        <td>                
+      {{!-- Botón: Borrar este producto del carrito  --}}
+
+      <form id="deleteForm-{{this.product._id}}" style="display:inline;">
+          <button type="button" 
+          class="btn-treal" 
+          onclick="eliminarProd('{{../cart._id}}','{{this.product._id}}')"
+           title="Borrar este producto del carrito ">
+    Eliminar 
+  </button>
+</form>
+</td>
+      </tr>
+    {{/each}}
+  </tbody>
+</table>
+
+<br>
+<hr  class="lineaSupTit" >
+
+<script>
+  function eliminarProd(cartId, productId) {
+    
+    fetch(`/carts/${cartId}/product/${productId}`, {
+      method: 'DELETE'
+    })
+    .then(res => {
+      alert(`001 redirijo desde aquí `);
+       if (!res.ok) throw new Error("Error eliminando producto");
+         // Redirigimos la pagina
+         window.location.href = `/carts/${cartId}`;
+    })
+    .catch(err => alert(err.message));
+  }
+</script>

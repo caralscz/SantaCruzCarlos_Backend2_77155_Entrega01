@@ -1,0 +1,132 @@
+<!--
+// -----------------------------------------------------------
+// src/views/realTimeProducts.handlebars
+// Crear/Eliminar productos usando WebSocket.
+// Se actualiza en vivo en todos los clientes.
+// -----------------------------------------------------------
+-->
+
+<!-- Linea del título -->
+<div class="tit-simple">
+<h1>Productos en tiempo real</h1>
+
+</div>
+<hr  class="lineaSupTit" >
+
+<!-- ------------------------------ --> 
+<!-- formulario de alta de producto -->
+<!-- ------------------------------ -->
+
+<h4 class="muted-blue">Crear/Eliminar productos usando WebSocket. La lista se sincroniza en vivo.</h4>
+
+<h2>Crear producto</h2>
+<form id="createForm">
+  <input name="title" placeholder="Título" required />
+  <input name="description" placeholder="Descripción" required />
+  <input name="code" placeholder="Código (único)" required />
+  <input name="price" placeholder="Precio" type="number" required />
+  <input name="stock" placeholder="Stock" type="number" required />
+  <input name="category" placeholder="Categoría" required />
+  <input name="thumbnails" placeholder="Thumbs (URL de la imágen del producto)" />
+  <button type="submit">Crear</button>
+</form>
+
+<hr  class="lineaSupTit" >
+
+<!--  Lista de productos -->
+<h2 style="margin-top:24px">Listado</h2>
+<ul id="list"></ul>
+
+<script src="/socket.io/socket.io.js"></script>
+<script>
+  const socket = io();
+  const $list = document.getElementById('list');
+  const $form = document.getElementById('createForm');
+
+  function renderItem(p) {
+    const li = document.createElement('li');
+    li.id = 'prod-' + p._id;
+    li.className = 'row';
+    li.style.justifyContent = 'space-between';
+    li.style.gap = '12px';   
+
+    // ----------------------------------------------
+    //
+    // aquí armo la fila por cada producto 
+    //
+    // ----------------------------------------------
+    // Bloque izquierdo
+    const left = document.createElement('div');
+    left.innerHTML = `
+      <strong>${p.title}</strong>
+      <span class="muted">(${p.code})</span>
+      <span class="muted"> - $ ${p.price}</span>
+    `;   // Fin left 
+
+    // Bloque derecho
+    // class="btn-treal btn-1rem btn-separado" 
+    const right = document.createElement('div');
+    right.style.display = 'flex';
+    right.style.gap = '8px';
+
+    // Botón Ver detalle del producto + api/products/:id 
+    right.innerHTML = `
+    <button 
+        onclick="location.href='/${p._id}'" 
+        title="Ver: detalle del producto"> 
+        Detalle 
+      </button> 
+    
+    <button 
+        onclick="location.href='/api/products/${p._id}'" 
+        title="Ver: /api/products/${p._id}"> 
+        Ver api
+      </button> 
+    
+    `;
+    
+    // ----------------------------------------------
+    // botón "Eliminar" en la fila por cada producto 
+    // ----------------------------------------------
+        const del = document.createElement('button');
+        del.textContent = 'Eliminar';
+        del.title = `Eliminar este producto: ${p.title}`;
+        del.onclick = () => socket.emit('product:delete', p._id);
+        right.appendChild(del); 
+
+    li.append(left, right);
+    return li;
+  }
+
+  function upsertProduct(p) {
+    const id = p._id || p.id; // por si llega id lógico
+    const existing = document.getElementById('prod-' + id);
+    if (existing) existing.remove();
+    $list.prepend(renderItem({ ...p, _id: id }));
+  }
+
+  function removeProduct(id) {
+    const el = document.getElementById('prod-' + id);
+    if (el) el.remove();
+  }
+
+  socket.on('products:init', (products) => {
+    $list.innerHTML = '';
+    products.forEach(upsertProduct);
+  });
+
+  socket.on('product:created', upsertProduct);
+  socket.on('product:deleted', removeProduct);
+  socket.on('error:message', (msg) => alert(msg));
+
+  $form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const fd = new FormData($form);
+    const payload = Object.fromEntries(fd.entries());
+    if (payload.thumbnails) {
+      payload.thumbnails = payload.thumbnails.split(',').map(s => s.trim()).filter(Boolean);
+    }
+    socket.emit('product:create', payload);
+    $form.reset();
+  });
+</script>

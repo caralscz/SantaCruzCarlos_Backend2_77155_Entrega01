@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<!--
+// -----------------------------------------------------------
+// src/views/layouts/main.handlebars
+//
+// Vistas (Handlebars)
+//
+// Los onclick="location.href='/crud/Users'" etc de los botones
+// deben estar definidos en routers/viewsRouter.js
+// -----------------------------------------------------------
+-->
+
+<head>
+  <meta charset="utf-8" />
+  <title>{{title}}</title>
+      <link rel="icon" type="image/png+xml" href="../../img/IcoCoderShop.png" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+
+  {{!-- // esta es la línea luperior con botones comunes a todas las páginas --}}
+  <p class="lineaSupTit">
+  
+  {{!-- Ir al HOME --}}
+  <button 
+  class="btn-treal" 
+  onclick="location.href='/'" 
+  title="Ir a la Home">
+  🏠 Home
+</button>
+
+{{!-- Ir a Real time products --}}
+<button 
+  class="btn-treal" /*  btn-separado */
+  onclick="location.href='/realtimeproducts'" 
+  title="Ir a ver página en Tiempo Real">
+  Tiempo real
+</button>
+
+{{!-- Ir a ver productos con paginación --}}
+<button 
+  class="btn-treal" 
+  onclick="location.href='/products'" 
+  title="Ver esta página de productos con paginación">
+  Con paginación
+</button>
+
+{{!-- CRUD usuarios  --}}
+<button 
+  class="btn-treal" 
+  onclick="location.href='/crud/Users'" 
+  title="CRUD usuarios">
+  CRUD Users
+</button>
+
+{{!-- Login Identificación  --}}
+<button 
+  class="btn-treal" 
+  onclick="location.href='/login'" 
+  title="Login / Identificación">
+  Login
+</button>
+
+{{!-- 
+      Mostrar nombre del usuario autenticado 
+      y el botón de salir de la sesión solo si está autenticado
+--}}
+  {{#if user}}
+      <!-- Usuario autenticado -->
+      <span>Hola, {{user.first_name}} {{user.last_name}}</span>
+
+      {{!-- Logout / salir de la sesión  --}}
+      <form id="logoutForm" action="/api/sessions/logout" method="POST" style="display:inline;">
+        <button type="submit" class="btn btn-danger"  title="Logoff / salir de la sesión">🔒 Logout</button>
+      </form>
+  {{else}}
+      <!-- Usuario NO autenticado -->
+      <span>Usuario no autenticado ...</span>
+  {{/if}}
+
+
+
+{{!-- Ir a probar los end points api/products y api/carts --}}
+{{!-- <a href="./menuPrue.html" 
+   target="menuPrue" 
+   class="btn-treal" 
+   title="Ir a probar los endpoints: api/products y api/carts">
+  Ver endpoints
+</a> --}}
+
+  </p>
+  <hr  class="lineaSupTit" >
+  {{{body}}}
+</body>
+</html>

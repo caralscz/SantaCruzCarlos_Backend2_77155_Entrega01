@@ -1,0 +1,41 @@
+<!--
+// -----------------------------------------------------------
+// src/views/register.handlebars
+// Crear un nuevo usuario 
+// -----------------------------------------------------------
+-->
+<!-- Linea del título -->
+<div class="tit-simple">
+    <h1>Coder Shop - Crear identificación de un nuevo usuario</h1>
+</div>
+<hr  class="lineaSupTit" >
+<!--  ----------------------------------------------------------- -->
+
+<h4 class="muted-blue">Nuevo usuario</h4>
+
+<form action="/api/sessions/register" method="post" id="createForm" >
+      <label for="first_name">Nombre:</label> <br />
+      <input type="text" id="first_name" name="first_name" placeholder="Nombres"  required /><br />
+      
+      <label for="last_name">Apellido:</label><br />
+      <input type="text" id="last_name" name="last_name" placeholder="Apellido" required /><br />
+
+      <label for="email">Email:</label><br />
+      <input type="email" id="email" name="email" placeholder="MiCorreo@valido.com" required /><br />
+      
+      <label for="password">Password:</label> <br />
+      <input type="password" id="password" name="password" placeholder="****" required /><br />
+      
+      <label for="age">Edad:</label><br />
+      <input type="age" id="age" name="age" placeholder="99" /><br />
+      
+      <label for="role">Rol:</label><br />
+      <input type="role" id="role" name="role" value="user" readonly /><br />
+            
+    <button type="submit"> Registrar</button>
+</form>
+
+<hr  class="lineaSupTit" >
+
+¿Ya tienes cuenta?
+<a href="/login">Ingresar</a>
