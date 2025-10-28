@@ -9,7 +9,7 @@ const { engine } = require('express-handlebars');
 //const { join, __dirname } = require('./utils/passwJwt');
 const { attachUserToViews ,isAuthenticated} = require('./utils/passwJwt');
 
-const userRoutes = require('./routes/sessionRoutes');
+const sessionRoutes = require('./routes/sessionRoutes');
 const session =require("express-session");
 const cookieParser =require("cookie-parser");
 // passport
@@ -65,7 +65,7 @@ app.use(attachUserToViews);
 app.use('/api/products', productsRouterFactory(io)); // Router de productos
 app.use('/api/carts', cartsRouter);    // Router de carritos
 app.use('/api/users', userRouter);     // Router de usuarios
-app.use("/api/sessions", userRoutes);  // Router de sesiones (login, register)
+app.use("/api/sessions", sessionRoutes);  // Router de sesiones (login, register)
 app.use('/crud/users', crudUsersRouter);  // Router CRUD visual de usuarios
 
 // ============================================================

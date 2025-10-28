@@ -9,20 +9,22 @@
     <h1>Coder Shop - Login / Identificación</h1>
 </div>
 <hr  class="lineaSupTit" >
-<!--  ----------------------------------------------------------- -->
+<!--  ----------------------------------------------------------- --> 
 
 <h4 class="muted-blue">Identificación de usuario</h4>
 <h5 class="muted-red">Luego de identificarse podrá ingresar al "Home" </h5>
 <hr  class="lineaSupTit" >
 
 <form id="createForm"  action="/api/sessions/login" method="post">
+ <fieldset> 
+    <legend>Su identificación</legend>
 
     <label for="email">Email:</label>      <br />
     <input type="email" id="email" name="email" 
     
               {{!-- Mostrar nombre del usuario autenticado --}}
-              {{#if user}}
-                  value='{{user.email}}'
+              {{#if res.locals.user}}
+                  value='{{res.locals.user.email}}'
               {{/if}}
 
               placeholder="Ingrese su e-mail" required />
@@ -33,6 +35,8 @@
              placeholder="******"  required />
     <br />
   <button type="submit">Ingresar</button>
+
+  </fieldset>
 </form>
 
 <hr  class="lineaSupTit" >

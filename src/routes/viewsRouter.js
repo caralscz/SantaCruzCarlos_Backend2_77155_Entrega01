@@ -58,11 +58,9 @@ router.get('/crud/Users', async (req, res) => {
   }
 });
 
-// -----------------------------------------------------------
-// lee products y carts
-// -----------------------------------------------------------
-
+// ----------------------------------------------------------- 
 // Home: renderiza lista estática (HTTP)
+// -----------------------------------------------------------
 router.get('/', async (req, res) => {
 
   // Si no hay usuario identificado, redirigimos al login
@@ -84,7 +82,7 @@ router.get('/', async (req, res) => {
 });
 
 // -----------------------------------------------------------
-// lee products
+// products
 // -----------------------------------------------------------
 
 // page: renderiza lista estática Paginando (HTTP)

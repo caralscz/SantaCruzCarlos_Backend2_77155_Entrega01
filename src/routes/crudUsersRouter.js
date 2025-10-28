@@ -5,6 +5,7 @@
 
 const express = require('express');
 const router = express.Router();
+const { createHash, isValidadPassword } =require( "../utils/passwJwt.js");
 const userModel = require('../dao/models/userModel');
 const bcrypt = require('bcrypt');
 
@@ -26,18 +27,25 @@ router.get('/', async (req, res) => {
 router.post('/', async (req, res) => {
   try {
     const { first_name, last_name, email, age, password, role } = req.body;
-    const password_hash = bcrypt.hashSync(password, bcrypt.genSaltSync(10));
+    const password_hash =  createHash(password);
+    
+    // verifico si el usuario ya existe 
+    const userExist = await userModel.findOne({ email });
+    if (userExist) {
+      return res.status(400).json({ message: "El correo ya existe" });
+    }
 
-    await userModel.create({
+    const newUser = {
       first_name,
       last_name,
       email,
       age,
       password: password_hash,
-      role,
-    });
+      role
+    };
+    await userModel.create(newUser);
 
-    res.redirect('/crud/users');
+    res.redirect('/crud/users');  
   } catch (err) {
     res.status(500).send(`Error al crear usuario: ${err.message}`);
   }

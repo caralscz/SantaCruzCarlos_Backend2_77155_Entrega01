@@ -1,4 +1,4 @@
-body { font-family: system-ui, -apple-system, Segoe UI, Roboto; margin: 20px; }
+body { font-family: system-ui, -apple-system, Segoe UI, Roboto; margin: 20px; } 
 .grid { 
   display: grid; 
   gap: 16px; 

@@ -10,21 +10,21 @@ const router = Router();
 // rutas post  -  register
 // -----------------------------------------------------------
 router.post("/register", async (req, res) => {
-  const { first_name, last_name, email, age,password } = req.body;
+  const { first_name, last_name, email, age, password, role } = req.body;
   const password_hash = createHash(password);
   try {
     const userExist = await userModel.findOne({ email });
     if (userExist) {
-      return res.status(400).json({ message: "El correo ya existe" });
+      return res.status(400).json({ message: "El correo ya existe."});
     }
     const newUser = {
       first_name,
       last_name,
       email,
       age,
-      password: password_hash
+      password: password_hash,
+      role
     };
-    console.log("Registrando usuario", newUser);
     await userModel.create(newUser);
     res.status(201).redirect("/login");
   } catch (error) {
