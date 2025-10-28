@@ -4,7 +4,9 @@
 ## Objetivo
 
   El e-commerce existente del curso anterior, fué desarrollado como una API RESTful con Node.js, Express, Handlebars y Socket.io para la gestión de productos y carritos de compra en tiempo real, con persistencia en sistema de archivos mongoDB.
+
   Sobre esa base, se debe implementar un sistema de "login" de usuario con encriptación de contraseñas y que trabaje con JWT (JSON Web Tokens)
+
   Se debe hacer un CRUD de usuarios
 
 ## Pre-Entrega 01
@@ -45,7 +47,9 @@
   Implementar botón de “logout” para destruir la sesión
 
 - El index de la aplicacion es "src/app.js"
+
   El CRUD  de usuarios (/crud/users) se define en "src/routes/crudUsersRouter.js"
+  
   Ubicación del archivo "src/dao/models/userModel.js"
 
 ---
