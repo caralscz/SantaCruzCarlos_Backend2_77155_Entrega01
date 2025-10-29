@@ -9,9 +9,27 @@
 <div class="tit-simple">
 <h1>Home - Coder Shop - productos</h1>
 </div>
-<hr  class="lineaSupTit" >
+<p class="lineaSupTit">
+{{!-- Ir a Real time products --}}
+<button 
+  class="btn-treal" /*  btn-separado */
+  onclick="location.href='/realtimeproducts'" 
+  title="Ir a ver página en Tiempo Real">
+  Tiempo real
+</button>
 
+{{!-- Ir a ver productos con paginación --}}
+<button 
+  class="btn-treal" 
+  onclick="location.href='/products'" 
+  title="Ver esta página de productos con paginación">
+  Con paginación
+</button>
+
+</p>
 <h4 class="muted-blue">Seleccionar un carrito</h4>
+
+<hr  class="lineaSupTit" >
 
 <!--  form para seleccionar un carrito  -->
 <form action="#" method="GET" class="form-form">
