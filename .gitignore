@@ -12,8 +12,7 @@
 # este es el contenedor de paginas que uso de apuntes
 .apuntes/
 src/pru.js
-.envs
-
+.env
 # de aquí en adelante son los que se ignora por defecto lo que instalamos
 node_modules/
 node_modules
