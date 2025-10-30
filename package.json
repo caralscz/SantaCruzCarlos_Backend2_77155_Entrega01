@@ -1,7 +1,7 @@
 {
   "name": "comision77155entrega01",
   "version": "1.0.0",
-  "type":"commonjs",
+  "type": "commonjs",
   "description": "Entrega 01 - Backend 02 - 2025",
   "main": "src/app.js",
   "scripts": {

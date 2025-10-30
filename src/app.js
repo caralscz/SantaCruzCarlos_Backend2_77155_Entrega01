@@ -6,7 +6,7 @@
 // 
 const express = require('express');
 const { engine } = require('express-handlebars');
-//const { join, __dirname } = require('./utils/passwJwt');
+const envs = require( "./config/envs.js");    // variables de entorno
 const { attachUserToViews ,isAuthenticated} = require('./utils/passwJwt');
 
 const sessionRoutes = require('./routes/sessionRoutes');
@@ -15,15 +15,18 @@ const cookieParser =require("cookie-parser");
 // passport
 const initializePassport =require("./config/passportConfig.js");
 const passport =require("passport");
+const app = express();
 
 const Handlebars = require('handlebars');  // para poder hacer el helper if
 const http = require('http');
 const path = require('path');
 const { Server } = require('socket.io');
 
-// Config y DB
-const { config } = require('./config/config');
 const { conectarDB } = require('./config/db');
+
+// App + HTTP server + Socket.io
+const server = http.createServer(app);
+const io = new Server(server);
 
 // Routers
 const userRouter = require('./routes/userRouter');
@@ -31,11 +34,6 @@ const cartsRouter = require('./routes/cartsRouter');
 const viewsRouter = require('./routes/viewsRouter');
 const productsRouterFactory = require('./routes/productsRouter');
 const crudUsersRouter = require('./routes/crudUsersRouter');
-
-// App + HTTP server + Socket.io
-const app = express();
-const server = http.createServer(app);
-const io = new Server(server);
 
 // Middlewares  incorporados de Express
 app.use(express.json());   // Formatea los cuerpos json de peticiones entrantes.
@@ -128,22 +126,22 @@ io.on('connection', async (socket) => {
   console.log(' ')
 
   // Voy a conexión con Mongo usando Mongoose. En config/db.js
-  //    Le paso (url, dbName) usando las constantes definidas en config.js
-  await conectarDB(config.MONGO_DB, config.DB_NAME);
+  //    Le paso (url, dbName) usando las constantes definidas en src/config/envs.js
+  await conectarDB(envs.mongo_db, envs.db_name);
   
   // Levanto el servidor HTTP en el puerto 8080
-  //    El puerto del listen, está definida en config.js
-  server.listen(config.PORT, () => {
+  //    El puerto del listen, está definida en src/config/envs.js
+  server.listen(envs.port, () => {
     console.log(' ')
     console.log('😊 Todo listo ')
     console.log(' ');
-    console.log(` Home      :   http://localhost:${config.PORT}/`);
-    console.log(` CRUD Users:   http://localhost:${config.PORT}/crud/Users`);
+    console.log(` Home      :   http://localhost:${envs.port}/`);
+    console.log(` CRUD Users:   http://localhost:${envs.port}/crud/Users`);
     console.log(' ');
-    console.log(` Real Time :   http://localhost:${config.PORT}/realtimeproducts`);
-    console.log(` Paginación:   http://localhost:${config.PORT}/products?page=1&limit=10`);
-    console.log(` API Products: http://localhost:${config.PORT}/api/products`);
-    console.log(` API Carts :   http://localhost:${config.PORT}/api/carts`);
-    console.log(` API Users :   http://localhost:${config.PORT}/api/users`);
+    console.log(` Real Time :   http://localhost:${envs.port}/realtimeproducts`);
+    console.log(` Paginación:   http://localhost:${envs.port}/products?page=1&limit=10`);
+    console.log(` API Products: http://localhost:${envs.port}/api/products`);
+    console.log(` API Carts :   http://localhost:${envs.port}/api/carts`);
+    console.log(` API Users :   http://localhost:${envs.port}/api/users`);
   });
 })();

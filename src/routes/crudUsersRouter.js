@@ -32,7 +32,7 @@ router.post('/', async (req, res) => {
     // verifico si el usuario ya existe 
     const userExist = await userModel.findOne({ email });
     if (userExist) {
-      return res.status(400).json({ message: "El correo ya existe" });
+      return res.status(400).json({ status: "error", message: "El correo ya existe" });
     }
 
     const newUser = {
@@ -44,7 +44,6 @@ router.post('/', async (req, res) => {
       role
     };
     await userModel.create(newUser);
-
     res.redirect('/crud/users');  
   } catch (err) {
     res.status(500).send(`Error al crear usuario: ${err.message}`);

@@ -20,11 +20,12 @@
     <legend>Su identificación</legend>
 
     <label for="email">Email:</label>      <br />
+    <!-- res.locals.user -->
     <input type="email" id="email" name="email" 
-    
+     
               {{!-- Mostrar nombre del usuario autenticado --}}
-              {{#if res.locals.user}}
-                  value='{{res.locals.user.email}}'
+              {{#if user}}
+                  value='{{user.email}}'
               {{/if}}
 
               placeholder="Ingrese su e-mail" required />

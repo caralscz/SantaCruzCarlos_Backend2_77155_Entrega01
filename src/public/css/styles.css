@@ -89,6 +89,38 @@ form input { width: 100%; margin: 6px 0; padding: 8px; }
     background: #0056b3;
   }
 
+
+/* estilo del formulario con el que inicia crudUsers.handlebars  */
+ #createForm2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* dos columnas */
+    gap: 8px 12px; /* espacio entre filas y columnas */
+    max-width:  37.5rem;  /* 600px*/
+    margin-top: 1rem;   /* 16px */
+  }
+
+  #createForm2 input {
+    padding: 6px 8px; /* menos alto */
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+    /* grid-column: span 2; /* botón ocupa toda la fila */
+    /*  */
+  #createForm2 button {
+    padding: 6px 16px;
+    font-size: 12px;
+    background: #b4b9be;
+    color: rgb(0, 0, 0);
+    border: .125rem;   /* 2px  */
+    border-radius: 4px;
+    cursor: pointer;
+  }
+
+  #createForm2 button:hover {
+    background: #90a2b8;
+  }
+
 /*   Botón para la home pagina: home.handlebars */
  .btn-treal {
     background-color: #007bff; /*  orange; */

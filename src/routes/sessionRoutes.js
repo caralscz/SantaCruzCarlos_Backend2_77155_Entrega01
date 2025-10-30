@@ -1,3 +1,9 @@
+// -----------------------------------------------------------
+// src/routes/sessionRoutes.js
+// 
+// -----------------------------------------------------------
+
+
 const { Router } =require( "express");
 const { createHash, isValidadPassword } =require( "../utils/passwJwt.js");
 const userModel = require("../dao/models/userModel.js");
@@ -6,7 +12,7 @@ const { generateToken } = require("../utils/passwJwt.js");
 
 const router = Router();
 // Notas: también debo definir las rutas en app.js (generico) y en viewsRouter.js (vistas)
-// -----------------------------------------------------------
+// ----------------------------------------------------------- 
 // rutas post  -  register
 // ----------------------------------------------------------- 
 router.post("/register", async (req, res) => {

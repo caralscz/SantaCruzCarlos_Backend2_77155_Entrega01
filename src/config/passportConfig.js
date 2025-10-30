@@ -1,14 +1,23 @@
+//
+// -----------------------------------------------------------
+// src/config/passportConfig.js
+// -----------------------------------------------------------
+
 const passport = require("passport");
 const local = require("passport-local");
 const userModel = require("../dao/models/userModel.js");
 const { createHash } = require("../utils/passwJwt.js");
 const jwt = require("passport-jwt");
+const envs = require( "../config/envs.js");    // variables de entorno
 
+// Estrategias
 const JWTStrategy = jwt.Strategy;
 const ExtractJWT = jwt.ExtractJwt;
-const JWT_SECRET = "anitalavalatina";
 const LocalStrategy = local.Strategy;
 
+// -----------------------------------------------------------
+// Función auxiliar: extrae token de la cookie "authCookie"
+// -----------------------------------------------------------
 const cookieExtractor = (req) => {
   let token = null;
   if (req && req.cookies) {
@@ -17,6 +26,9 @@ const cookieExtractor = (req) => {
   return token;
 };
 
+// -----------------------------------------------------------
+// Inicialización de Passport
+// -----------------------------------------------------------
 const initializePassport = () => {
   passport.use(
     "register",
@@ -48,13 +60,16 @@ const initializePassport = () => {
     )
   );
 
-  // jwt strategy
+// -----------------------------------------------------------
+// Estrategia JWT: Autenticación por token =====
+// -----------------------------------------------------------
+
   passport.use(
     "jwt",
     new JWTStrategy(
       {
         jwtFromRequest: ExtractJWT.fromExtractors([cookieExtractor]),
-        secretOrKey: JWT_SECRET,
+        secretOrKey: envs.jwt_secret,   
       },
       async (jwt_payload, done) => {
         try {
@@ -66,7 +81,9 @@ const initializePassport = () => {
     )
   );
 
-  // serialización de usuario
+// -----------------------------------------------------------
+// Serialización / Deserialización  de usuario
+// -----------------------------------------------------------
   passport.serializeUser((user, done) => {
     done(null, user._id);
   });

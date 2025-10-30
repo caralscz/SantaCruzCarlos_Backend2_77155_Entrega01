@@ -49,9 +49,11 @@
 </button>
 
 {{!-- 
-      Mostrar nombre del usuario autenticado (res.locals.user)
+      Mostrar nombre del usuario autenticado (user   o   res.locals.user)
       y el botón de salir de la sesión solo si está autenticado
+      
 --}}
+
   {{#if user}}
       <!-- Usuario autenticado --> 
       <span>Hola, {{user.first_name}} {{user.last_name}}</span>
